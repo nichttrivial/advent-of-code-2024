@@ -1,11 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	input "github.com/nichttrivial/advent-of-code-2024/internal"
+)
 
 func main() {
-	var i int = 1
-	fmt.Println("Hello World Dev Container for AOC")
-	fmt.Println(i)
-	i = 2
-	fmt.Println(i)
+	input, err := input.ReadInputToString()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	puzzle(input)
+}
+
+func puzzle(input string) int {
+	fmt.Println(string(input))
+	return 0
 }
