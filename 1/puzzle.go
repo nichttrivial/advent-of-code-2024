@@ -88,24 +88,23 @@ func newPuzzleDataFromString(input string) (puzzleData, error) {
 	re := regexp.MustCompile("[0-9]+")
 
 	for _, line := range strings.Split(strings.TrimSuffix(input, "\n"), "\n") {
-		numbers := re.FindAllString(line, 2)
+		numbers := re.FindAllString(line, -1)
+		if numbers == nil || len(numbers) != 2 {
+			return puzzleData{}, errors.New("invalid input data")
+		}
 
 		l, err := strconv.Atoi(numbers[0])
 		if err != nil {
-			return pd, errors.New("error in the left numbers")
+			return puzzleData{}, errors.New("error in the left numbers")
 		}
 
 		r, err := strconv.Atoi(numbers[1])
 		if err != nil {
-			return pd, errors.New("error in the right numbers")
+			return puzzleData{}, errors.New("error in the right numbers")
 		}
 
 		pd.left = append(pd.left, l)
 		pd.right = append(pd.right, r)
-	}
-
-	if pd.left == nil || pd.right == nil || len(pd.right) != len(pd.left) {
-		return pd, errors.New("invalid input data")
 	}
 
 	return pd, nil
