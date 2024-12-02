@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	input "github.com/nichttrivial/advent-of-code-2024/internal"
+	utility "github.com/nichttrivial/advent-of-code-2024/internal"
 )
 
 func main() {
-	input, err := input.ReadInputToString()
+	input, err := utility.ReadInputToString()
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
