@@ -18,3 +18,10 @@ func ReadInputToString() (string, error) {
 
 	return string(input), nil
 }
+
+func AbsInt(x int) int {
+	if x < 0 {
+		return -1 * x
+	}
+	return x
+}

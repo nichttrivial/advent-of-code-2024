@@ -17,3 +17,10 @@ func TestPuzzleOne(t *testing.T) {
 		t.Errorf("Result was not correct. Got: %d Want: %d", result, 2)
 	}
 }
+
+func TestPuzzleTwo(t *testing.T) {
+	result, _ := puzzleTwo(testInput)
+	if result != 4 {
+		t.Errorf("Result was not correct. Got: %d Want: %d", result, 4)
+	}
+}
