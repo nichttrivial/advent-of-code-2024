@@ -4,6 +4,7 @@ import (
 	"log"
 	"regexp"
 	"strconv"
+	"strings"
 
 	utility "github.com/nichttrivial/advent-of-code-2024/internal"
 )
@@ -22,16 +23,25 @@ func main() {
 	log.Println(result)
 
 	//Part 2
-	// result, err = puzzleTwo(input)
-	// if err != nil {
-	// 	log.Fatalln(err.Error())
-	// }
-	// log.Println(result)
+	result, err = puzzleTwo(input)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	log.Println(result)
 }
 
 func puzzleOne(input string) (int, error) {
 	re := regexp.MustCompile(`mul\([0-9]+,[0-9]+\)`)
 	instructions := re.FindAllString(input, -1)
+	return sumSlice(execInstructions(instructions)), nil
+}
+
+func puzzleTwo(input string) (int, error) {
+	input = strings.ReplaceAll(input, "\n", "") //hack because the reggex does not work for multiline dont's()
+	re := regexp.MustCompile(`don't\(\).+?(do\(\)|\z)`)
+	do := re.ReplaceAllString(input, "")
+	re = regexp.MustCompile(`mul\([0-9]+,[0-9]+\)`)
+	instructions := re.FindAllString(do, -1)
 	return sumSlice(execInstructions(instructions)), nil
 }
 
