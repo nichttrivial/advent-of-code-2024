@@ -23,11 +23,11 @@ func main() {
 	log.Println(result)
 
 	//Part 2
-	// result, err = puzzleTwo(input)
-	// if err != nil {
-	// 	log.Fatalln(err.Error())
-	// }
-	// log.Println(result)
+	result, err = puzzleTwo(input)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	log.Println(result)
 }
 
 func puzzleOne(input string) (int, error) {
@@ -36,7 +36,8 @@ func puzzleOne(input string) (int, error) {
 }
 
 func puzzleTwo(input string) (int, error) {
-	return 0, nil
+	pd := newPuzzleDataFromString(input)
+	return pd.countXedmas(), nil
 }
 
 type puzzleData struct {
@@ -121,6 +122,26 @@ func (pd puzzleData) countXmas() int {
 		result += len(re.FindAllString(strings.Join(diag, ""), -1))
 		slices.Reverse(diag)
 		result += len(re.FindAllString(strings.Join(diag, ""), -1))
+	}
+	return result
+}
+
+func (pd puzzleData) countXedmas() int {
+	result := 0
+	for i, row := range pd.rows {
+		for j, char := range row {
+			if char == "A" {
+				if i-1 < 0 || j-1 < 0 || i+1 >= len(pd.rows) || j+1 >= len(pd.rows) {
+					continue
+				}
+				if (pd.rows[i-1][j+1] == "S" && pd.rows[i+1][j-1] == "M" ||
+					pd.rows[i-1][j+1] == "M" && pd.rows[i+1][j-1] == "S") &&
+					(pd.rows[i-1][j-1] == "S" && pd.rows[i+1][j+1] == "M" ||
+						pd.rows[i-1][j-1] == "M" && pd.rows[i+1][j+1] == "S") {
+					result += 1
+				}
+			}
+		}
 	}
 	return result
 }
